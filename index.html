@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Système de liste éditable</title>
+  <style>
+    #list-container {
+      margin-bottom: 10px;
+    }
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .list-item input[type="text"] {
+      flex: 1;
+      margin-right: 5px;
+    }
+    .list-item button {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="list-container">
+    <div class="list-item">
+      <input type="text" value="Objet 1" disabled>
+      <button onclick="editItem(0)">Éditer</button>
+    </div>
+    <div class="list-item">
+      <input type="text" value="Objet 2" disabled>
+      <button onclick="editItem(1)">Éditer</button>
+    </div>
+    <div class="list-item">
+      <input type="text" value="Objet 3" disabled>
+      <button onclick="editItem(2)">Éditer</button>
+    </div>
+  </div>
+
+  <div id="edit-form" style="display: none;">
+    <input type="text" id="edit-input">
+    <button onclick="saveItem()">Enregistrer</button>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    let editIndex = null;
+
+    function editItem(index) {
+      const listItem = document.getElementsByClassName('list-item')[index];
+      const editForm = document.getElementById('edit-form');
+      const editInput = document.getElementById('edit-input');
+
+      const itemText = listItem.querySelector('input[type="text"]').value;
+      editInput.value = itemText;
+      editIndex = index;
+
+      listItem.style.display = 'none';
+      editForm.style.display = 'block';
+    }
+
+    function saveItem() {
+      const listItem = document.getElementsByClassName('list-item')[editIndex];
+      const editForm = document.getElementById('edit-form');
+      const editInput = document.getElementById('edit-input');
+
+      const newItemText = editInput.value;
+      listItem.querySelector('input[type="text"]').value = newItemText;
+
+      listItem.style.display = 'flex';
+      editForm.style.display = 'none';
+
+      editIndex = null;
+    }
+
+    // Envoyer un message à la fenêtre principale pour notifier les changements
+    function sendListUpdate() {
+      const listItems = Array.from(document.getElementsByClassName('list-item'));
+      const updatedList = listItems.map((item) => item.querySelector('input[type="text"]').value);
+
+      ipcRenderer.send('list-updated', updatedList);
+    }
+
+    // Écouter les événements du renderer process
+    ipcRenderer.on('list-item-edited', (event, index, value) => {
+      const listItem = document.getElementsByClassName('list-item')[index];
+      listItem.querySelector('input[type="text"]').value = value;
+    });
+
+    // Lorsque l'application Electron est prête
+    document.addEventListener('DOMContentLoaded', () => {
+      sendListUpdate();
+    });
+  </script>
+</body>
+</html>
