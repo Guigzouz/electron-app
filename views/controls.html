@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="../style.css">
+
+  </head>
+  <body>
+    <header class="nav-header">
+        <div class="nav-div">
+          <a href="../index.html">Liste de bières</a>
+          <a href="controls.html">Ajouter une bière</a>
+          <a href="charts.html">Voir les stats</a>
+        </div>
+      </header>
+    <div id="controls" class="beer-container">
+        <h2>Ajouter une bière</h2>
+        <div class="beer-form">
+            <div class="form">
+                <label for="nom">Nom bière :</label>
+                <input type="text" name="nom" id="nom" required>
+              </div>
+              <div class="form">
+                <label for="description">Description bière :</label>
+                <input type="textinput" name="description" id="description" required>
+              </div>
+              <div class="form">
+                <label for="prix">Prix bière :</label>
+                <input type="number" name="prix" id="prix" min="0" required>
+              </div>
+              <div class="form">
+                <label for="type">Type de bière:</label>
+                <select id="type" name="type">
+                    <option value="BLO">Blonde</option>
+                  <option value="BRU">Brune</option>
+                  <option value="BLA">Blanche</option>
+                </select>
+              </div>
+
+              <button id="add-product">Enregistrer</button>
+            </div>
+        </div>
+
+    <script src="../scripts/controls.js"></script>
+  </body>
+</html>

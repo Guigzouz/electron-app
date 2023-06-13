@@ -6,42 +6,49 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-      <div id="controls" class="beer-container">
-        <h2>Ajouter une bière</h2>
-        <form action="POST" class="beer-form">
-            <div class="form">
-                <label for="name">Nom bière :</label>
-                <input type="text" name="name" id="name" required>
-              </div>
-              <div class="form">
-                <label for="description">Description bière :</label>
-                <input type="textinput" name="description" id="description" required>
-              </div>
-              <div class="form">
-                <label for="prix">Prix bière :</label>
-                <input type="number" name="prix" id="prix" required>
-              </div>
-              <div class="form">
-                <label for="beer-type">Type de bière:</label>
-                <select id="beer-type" name="beer-type">
-                    <option value="BLO">Blonde</option>
-                  <option value="BRU">Brune</option>
-                  <option value="BLA">Blanche</option>
-                </select>
-              </div>
+    <header class="nav-header">
+      <div class="nav-div">
+        <a href="index.html">Liste de bières</a>
+        <a href="views/controls.html">Ajouter une bière</a>
+        <a href="views/charts.html">Voir les stats</a>
+      </div>
+    </header>
 
-              <button id="add-product">Enregistrer</button>
-        </form>
+    <div class="beer-list-container">
+      <div id="beer-list">
+        <ul id="beers" class="scrollable-list">
+        </ul>
+      </div>
+    </div>
+
+    <div id="edit-form-container" class="beer-container" style="display: none;">
+      <h2>Modifier une bière</h2>
+      <div class="beer-form">
+        <div class="form">
+            <label for="nom">Nom bière :</label>
+            <input type="text" name="nom" id="nom" required>
+          </div>
+          <div class="form">
+            <label for="description">Description bière :</label>
+            <input type="textinput" name="description" id="description" required>
+          </div>
+          <div class="form">
+            <label for="prix">Prix bière :</label>
+            <input type="number" name="prix" id="prix" min="0" required>
+          </div>
+          <div class="form">
+            <label for="type">Type de bière:</label>
+            <select id="type" name="type">
+                <option value="BLO">Blonde</option>
+              <option value="BRU">Brune</option>
+              <option value="BLA">Blanche</option>
+            </select>
+          </div>
+
+          <button id="add-product">Enregistrer</button>
         </div>
-        <div class="beer-list-container">
-            <button id="add-product">Ajouter une bière</button>
-            <div id="beer-list">
-              <ul id="beers" class="scrollable-list">
-              </ul>
-            </div>
+    </div>
 
-        </div>
-
-    <script src="renderer.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
